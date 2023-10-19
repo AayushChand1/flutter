@@ -1,0 +1,171 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        /* light theme settings */
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.system,
+
+      /* ThemeMode.system to follow system theme, 
+         ThemeMode.light for light theme, 
+         ThemeMode.dark for dark theme
+      */
+      debugShowCheckedModeBanner: false,
+      title: "Hancy Calculator",
+      home: const Hancy(),
+    ));
+
+class Hancy extends StatefulWidget {
+  const Hancy({super.key});
+
+  @override
+  State<Hancy> createState() => _HancyState();
+}
+
+class _HancyState extends State<Hancy> {
+  final _operation = ['Add', 'Subtract', 'Multiply', 'Divide'];
+  var _values = "Add";
+  var _displayText = "";
+  TextEditingController textBox1 = TextEditingController();
+  TextEditingController textBox2 = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? textStyle = Theme.of(context).textTheme.titleMedium;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.purple[900],
+        title: const Text('Hancy Calculator'),
+        centerTitle: true,
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          children: <Widget>[
+            // First item
+            DropdownButton<String>(
+              value: _values,
+              style: textStyle,
+              items: _operation.map((String values) {
+                return DropdownMenuItem<String>(
+                    value: values, child: Text(values));
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _values = value!;
+                  print("Value changed to $value");
+                });
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 5),
+            ),
+            // Second item
+            TextField(
+              controller: textBox1,
+              style: textStyle,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  labelText: "First Number",
+                  hintText: "100",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 5),
+            ),
+            // Third item
+            TextField(
+              controller: textBox2,
+              style: textStyle,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  labelText: "Second Number",
+                  hintText: "80",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+            ),
+
+            // Forth item
+            Text(
+              _displayText,
+              style: const TextStyle(fontSize: 15),
+            ),
+            // Fifth item
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.purple[900],
+                      side: const BorderSide(color: Colors.grey, width: 2),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      shadowColor: Colors.black,
+                    ),
+                    child: const Text('Calculate'),
+                    onPressed: () {
+                      setState(() {
+                        double first = double.parse(textBox1.text);
+                        double second = double.parse(textBox2.text);
+
+                        switch (_values) {
+                          case "Add":
+                            _displayText = "The sum is ${first + second}";
+                            break;
+                          case "Subtract":
+                            _displayText = "The sum is ${first - second}";
+                            break;
+                          case "Multiply":
+                            _displayText = "The sum is ${first * second}";
+                            break;
+                          case "Divide":
+                            _displayText = "The sum is ${first / second}";
+                            break;
+                          default:
+                            _displayText = "Something went wrong";
+                        }
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.purple[900],
+                      side: const BorderSide(color: Colors.grey, width: 2),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      shadowColor: Colors.black,
+                    ),
+                    child: const Text('Clear'),
+                    onPressed: () {
+                      setState(() {
+                        _clearAll();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _clearAll() {
+    textBox1.text = "";
+    textBox2.text = "";
+    _displayText = "";
+  }
+}

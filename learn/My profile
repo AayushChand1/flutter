@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: "My Profile",
+    home: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 78, 27, 16),
+        title: const Text('My Profile'),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Center(
+              child: Image.network(
+                  "https://media.licdn.com/dms/image/C4E03AQE0DeCH934d4w/profile-displayphoto-shrink_800_800/0/1661745969202?e=1703116800&v=beta&t=ccW5YFBjn4vD0GVfwmmiUZpOJmnbOPYPDy4TP5KxeT8",
+                  width: 250)),
+          const SizedBox(height: 10),
+          const Text(
+            'Name: Aayush Chand',
+            style: TextStyle(
+                fontSize: 24,
+                color: Color.fromARGB(255, 78, 27, 16),
+                fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 5),
+          const Text('Address: Bedkot-7, Suda', style: TextStyle(fontSize: 18)),
+          const SizedBox(height: 5),
+          const Text('Email: aayushchand123321@gmail.com',
+              style: TextStyle(fontSize: 18)),
+          const SizedBox(height: 110),
+          const Text(
+            'Developed by: Aayush Chand',
+            style: TextStyle(color: Color.fromARGB(255, 78, 27, 16)),
+          )
+        ],
+      ),
+    ),
+  ));
+}

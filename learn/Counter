@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const ScoreApp());
+}
+
+class ScoreApp extends StatelessWidget {
+  const ScoreApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Score App',
+      home: ScoreHome(),
+    );
+  }
+}
+
+class ScoreHome extends StatefulWidget {
+  const ScoreHome({super.key});
+
+  @override
+  State<ScoreHome> createState() => _ScoreHomeState();
+}
+
+class _ScoreHomeState extends State<ScoreHome> {
+  int number = 0;
+  void increaseNumber() {
+    setState(() {
+      number++;
+    });
+  }
+
+  void decreaseNumber() {
+    setState(() {
+      number--;
+    });
+  }
+
+  void resetNumber() {
+    setState(() {
+      number = 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 2, 80, 37),
+        title: const Text('Score Changer'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Text(
+              'Score is',
+              style: TextStyle(
+                  color: Colors.purple[900],
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            Text(
+              '$number',
+              style: TextStyle(
+                  color: Colors.purple[900],
+                  fontSize: 135,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 45),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    increaseNumber();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 2, 80, 37),
+                      foregroundColor: Colors.white),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text('Increase'),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    decreaseNumber();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 161, 0, 0),
+                      foregroundColor: Colors.white),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text('Decrease'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          resetNumber();
+        },
+        child: const Icon(Icons.restore_outlined),
+      ),
+    );
+  }
+}
